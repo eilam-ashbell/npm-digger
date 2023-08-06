@@ -228,6 +228,28 @@ export class User {
                       })
                       .catch((err) => console.log(err));
         },
+
+        // todo: think about links to github and twitter
+        // twitterAccount: ():
+        //     | Record<string, string | Promise<string>>
+        //     | Promise<Record<string, string>>
+        //     | null => {
+        //     const username =
+        //         this.fullData !== undefined
+        //             ? this.fullData.scope.resource.twitter
+        //             : this.rawData()
+        //                   .then((res) => {
+        //                       return res.scope.resource.twitter;
+        //                   })
+        //                   .catch((err) => console.log(err));
+        //     return username
+        //         ? {
+        //               username: username,
+        //               link: `https://twitter.com/${username}`,
+        //           }
+        //         : null;
+        // },
+
         /**
          * @returns {string} associated twitter username
          */
@@ -286,8 +308,8 @@ export class User {
                 try {
                     // fetch next page
                     const response = await fetch(
-                        // 100 is the maximum perPage value
-                        this.baseUrl + `?perPage=100&page=${nextUrl}`,
+                        // 100 is the maximum perPage value. default is 25.
+                        this.baseUrl + `?page=${nextUrl}`,
                         {
                             method: "GET",
                             headers: this.headers,
