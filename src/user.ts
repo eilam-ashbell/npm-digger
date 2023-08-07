@@ -2,7 +2,7 @@ import AvatarsModel from "./models/avatars-model";
 import UserFullDataModel from "./models/user-full-data-model";
 import UserPackageDetailsModel from "./models/user-package-details-model";
 
-export class User {
+export default class User {
     private baseUrl: string;
     private headers: Headers;
     private username: string;

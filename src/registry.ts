@@ -1,8 +1,12 @@
 import RegistryModel from "./models/registry-model";
 
-export class Registry {
+export default class Registry {
     private registryData: RegistryModel;
-    private baseUrl: "https://registry.npmjs.org/";
+    private baseUrl: string;
+
+    constructor(registryUrl?: string) {
+        this.baseUrl = registryUrl || "https://registry.npmjs.org/"
+    }
 
     public async data() {
         try {
