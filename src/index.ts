@@ -1,5 +1,4 @@
-import { User } from './user.js'
+import { Registry } from "./registry.js";
+import { User } from "./user.js";
 
-export {
-  User,
-}
+export { User, Registry };
