@@ -559,7 +559,7 @@ export default class Package {
                 ? this.packageApiData.time
                 : this.api()
                       .then((res) => {
-                          return res?.packageApiData.time;
+                          return res?.time;
                       })
                       .catch((err) => console.log(err));
         },
