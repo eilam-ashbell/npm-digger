@@ -1,6 +1,6 @@
-import DistModel from "./dist-model";
 import DistTagsModel from "./dist-tags-model";
 import NpmPersonModel from "./npm-person-model";
+import PackageVersionsOverviewModel from "./package-versions-overview-model";
 export default class NpmPackageVersionDataModel {
     author: NpmPersonModel;
     description: string;
@@ -12,14 +12,7 @@ export default class NpmPackageVersionDataModel {
     name: string;
     license: string;
     version: string;
-    versions: {
-        version: string;
-        date: {
-            ts: number;
-            rel: string;
-        };
-        dist: DistModel;
-    }[];
+    versions: PackageVersionsOverviewModel[];
     deprecations: string[];
     dependencies?: Record<string, string>;
     devDependencies?: Record<string, string>;

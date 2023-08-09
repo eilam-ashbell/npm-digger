@@ -242,19 +242,6 @@ export default class Package {
     };
 
     /**
-     * @returns {DownloadsModel[]} list of last 52 weeks and downloads count for each
-     */
-    public weeklyDownloads(): DownloadsModel[] | Promise<DownloadsModel[]> {
-        return this.packagePageData !== undefined
-            ? this.packagePageData.downloads
-            : this.page()
-                  .then((res) => {
-                      return res.downloads;
-                  })
-                  .catch((err) => console.log(err));
-    }
-
-    /**
      * @returns {string} main route for github API of the package repo
      */
     public githubApiRoute(): string | Promise<string> {

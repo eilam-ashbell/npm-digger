@@ -37,7 +37,6 @@ export default class PackagePageModel {
     };
     scope: string;
     starAction: string;
-    versionsDownloads: Record<string, number>;
     readme: {
         data: string;
         ref: string;
