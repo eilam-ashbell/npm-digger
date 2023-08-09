@@ -1,10 +1,10 @@
 import DistTagsModel from "./models/dist-tags-model";
-import DownloadsModel from "./models/downloads-model";
 import NpmPackageVersionDataModel from "./models/npm-package-version-data-model";
 import NpmPersonModel from "./models/npm-person-model";
 import UserPackageDetailsModel from "./models/user-package-details-model";
-import PackageVersionsOverviewModel from "./models/package-versions-overview-model";
 import Downloads from "./downloads";
+import NpmOverviewVersionModel from "./models/npm-overview-version-model";
+import { FullPackageTimeModel } from "./models/package-time-model";
 export default class Package {
     private packageName;
     private packagePageUrl;
@@ -15,6 +15,7 @@ export default class Package {
     private packageApiData;
     private dependentsList;
     constructor(packageName: string);
+    downloads: Downloads;
     /**
      * @returns {JSON} JSON object consist all data from npm package page
      */
@@ -27,49 +28,53 @@ export default class Package {
     /**
      * @returns {string} Package name (with scope if exist).
      */
-    name(): string | Promise<string>;
+    name(): string | Promise<string | undefined | void>;
     /**
      * @returns {NpmPersonModel[]} npm username list of maintainers
      */
-    maintainers(): NpmPersonModel[] | Promise<NpmPersonModel[]>;
+    maintainers(): NpmPersonModel[] | Promise<NpmPersonModel[] | undefined | void>;
     /**
      * @returns {DistTagsModel} object includes main tags of the package (key: name, value: tag)
      */
-    distTags(): DistTagsModel | Promise<DistTagsModel>;
+    distTags(): DistTagsModel | Promise<DistTagsModel | undefined | void>;
     lastPublish: {
         /**
          * @returns {string} npm username of the maintainer who publish the last release
          */
-        maintainer: () => string | Promise<string>;
+        maintainer: () => string | Promise<string | undefined | void>;
         /**
          * @returns {string} date and time of last publish
          */
-        time: () => string | Promise<string>;
+        time: () => string | Promise<string | undefined | void>;
     };
     types: {
         /**
+         * @returns {boolean} 'true if types are bundled in the package
+         */
+        isBundled: () => boolean | Promise<boolean | undefined | void>;
+        /**
+         * @returns {boolean}  'true if types are in external package
+         */
+        isExternal: () => boolean | Promise<boolean | undefined | void>;
+        /**
          * @returns {Record<string,string>} object of entries for locate types for the package (key: name, value: entry)
          */
-        entries: () => Record<string, string> | Promise<Record<string, string>>;
+        entries: () => Record<string, string> | Promise<Record<string, string> | undefined | void>;
     };
     dependents: {
         /**
          * @returns {number} total number of dependents packages
          */
-        count: () => number | Promise<number>;
+        count: () => number | Promise<number | undefined | void>;
         /**
          * @returns {UserPackageDetailsModel[]} list of all dependents packages with main details
          */
-        listAll: () => UserPackageDetailsModel[] | Promise<UserPackageDetailsModel[]>;
+        listAll: () => UserPackageDetailsModel[] | Promise<UserPackageDetailsModel[] | undefined | void>;
     };
-    /**
-     * @returns {DownloadsModel[]} list of last 52 weeks and downloads count for each
-     */
-    weeklyDownloads(): DownloadsModel[] | Promise<DownloadsModel[]>;
     /**
      * @returns {string} main route for github API of the package repo
      */
-    githubApiRoute(): string | Promise<string>;
+    githubApiRoute(): string | Promise<string | undefined | void>;
     /**
      * @returns {string} URL for package page on npm
      */
@@ -78,65 +83,104 @@ export default class Package {
         /**
          * @returns {NpmPackageVersionDataModel} main data objects of the latest version of the package
          */
-        data: () => NpmPackageVersionDataModel | Promise<NpmPackageVersionDataModel>;
-        author: () => NpmPersonModel | Promise<NpmPersonModel>;
-        description: () => string | Promise<string>;
-        homepage: () => string | Promise<string>;
-        repository: () => string | Promise<string>;
-        keywords: () => string[] | Promise<string[]>;
-        maintainers: () => NpmPersonModel[] | Promise<NpmPersonModel[]>;
-        license: () => string | Promise<string>;
-        version: () => string | Promise<string>;
-        dependencies: () => Record<string, string> | Promise<Record<string, string>> | undefined;
-        devDependencies: () => Record<string, string> | Promise<Record<string, string>> | undefined;
+        data: () => NpmPackageVersionDataModel | Promise<NpmPackageVersionDataModel | undefined | void>;
+        author: () => NpmPersonModel | Promise<NpmPersonModel | undefined | void>;
+        description: () => string | Promise<string | undefined | void>;
+        homepage: () => string | Promise<string | undefined | void>;
+        repository: () => string | Promise<string | undefined | void>;
+        keywords: () => string[] | Promise<string[] | undefined | void>;
+        maintainers: () => NpmPersonModel[] | Promise<NpmPersonModel[] | undefined | void>;
+        license: () => string | Promise<string | undefined | void>;
+        version: () => string | Promise<string | undefined | void>;
+        dependencies: () => Record<string, string> | Promise<Record<string, string> | undefined | void> | undefined;
+        devDependencies: () => Record<string, string> | Promise<Record<string, string> | undefined | void> | undefined;
     };
     /**
      * @returns {boolean} 'true' if package is private
      */
-    isPrivate(): boolean | Promise<boolean>;
+    isPrivate(): boolean | Promise<boolean | undefined | void>;
     /**
      * @returns {boolean} 'true' if security placeholder was published for this package
      */
-    isSecurityPlaceholder(): boolean | Promise<boolean>;
+    isSecurityPlaceholder(): boolean | Promise<boolean | undefined | void>;
     /**
      * @returns {string} returns the data of the readme file
      */
-    readme(): string | Promise<string>;
+    readme(): string | Promise<string | undefined | void>;
     /**
      * @returns {NpmPersonModel} returns package author data
      */
-    author(): NpmPersonModel | Promise<NpmPersonModel>;
+    author(): NpmPersonModel | Promise<NpmPersonModel | undefined | void>;
     /**
      * @returns {string} returns package description data
      */
-    description(): string | Promise<string>;
+    description(): string | Promise<string | undefined | void>;
     /**
      * @returns {string} returns package homepage url
      */
-    homepage(): string | Promise<string>;
+    homepage(): string | Promise<string | undefined | void>;
     /**
      * @returns {string} returns package repository url
      */
-    repository(): string | Promise<string>;
+    repository(): string | Promise<string | undefined | void>;
     /**
      * @returns {string[]} returns package keywords
      */
-    keywords(): string[] | Promise<string[]>;
+    keywords(): string[] | Promise<string[] | undefined | void>;
     /**
      * @returns {string} returns package license
      */
-    license(): string | Promise<string>;
+    license(): string | Promise<string | undefined | void>;
     /**
      * @returns {string} returns package current version
      */
-    currentVersion(): string | Promise<string>;
+    currentVersion(): string | Promise<string | undefined | void>;
     /**
-     * @returns {PackageVersionsOverviewModel[]} returns package list of versions with key data
+     * @returns {Record<string, NpmOverviewVersionModel>} returns JSON object with versions data (key: version, value: data about the version)
      */
-    versions(): PackageVersionsOverviewModel[] | Promise<PackageVersionsOverviewModel[]>;
+    versions: {
+        data: () => Record<string, NpmOverviewVersionModel> | Promise<Record<string, NpmOverviewVersionModel> | undefined | void>;
+        /**
+         * @returns {string[]} returns package list deprecated versions
+         */
+        deprecations: () => string[] | Promise<string[] | undefined | void>;
+        /**
+         * @returns {FullPackageTimeModel} returns a JSON object with all releases times (key: release tag, value: date-time string)
+         */
+        releaseDates: () => FullPackageTimeModel | Promise<FullPackageTimeModel | undefined | void>;
+    };
     /**
-     * @returns {PackageVersionsOverviewModel[]} returns package list deprecated versions
+     * @returns {string} returns the package name, used as an ID in CouchDB
      */
-    deprecations(): string[] | Promise<string[]>;
-    downloads: Downloads;
+    id(): string | Promise<string | undefined | void>;
+    /**
+     * @returns {string} returns the revision number of this version of the document in CouchDB
+     */
+    rev(): string | Promise<string | undefined | void>;
+    /**
+     * @returns {string} returns time string of package creation
+     */
+    createdTime(): string | Promise<string | undefined | void>;
+    /**
+     * @returns {string} returns time string of package last modify time
+     */
+    lastModified(): string | Promise<string | undefined | void>;
+    stars: {
+        /**
+         * @returns {number} returns the number of users who star this package
+         */
+        count: () => number | Promise<number | undefined | void>;
+        /**
+         * @returns {string[]} returns a list of users who star this package
+         */
+        usersList: () => string[] | Promise<string[] | undefined | void>;
+    };
+    /**
+     * @returns {NpmPersonModel[]} returns a list of contributors of this package
+     */
+    contributors(): NpmPersonModel[] | Promise<NpmPersonModel[] | undefined | void>;
+    /**
+     * @returns {Record<string, string>} returns an object with available URLs for bug report
+     */
+    bugsReport(): Record<string, string> | Promise<Record<string, string> | undefined | void>;
 }
