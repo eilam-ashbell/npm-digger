@@ -7,6 +7,7 @@ import PackageApiModel from "./models/package-api-model";
 import PackagePageModel from "./models/package-page-model";
 import UserPackageDetailsModel from "./models/user-package-details-model";
 import PackageVersionsOverviewModel from "./models/package-versions-overview-model";
+import Downloads from "./downloads";
 
 export default class Package {
     private packageName: string;
@@ -29,6 +30,7 @@ export default class Package {
         this.headers = new Headers();
         this.headers.append("x-spiferack", "1");
         this.headers.append("content-type", "application/json");
+        this.downloads = new Downloads(packageName);
     }
 
     /**
@@ -542,4 +544,6 @@ export default class Package {
                   })
                   .catch((err) => console.log(err));
     }
+
+    public downloads: Downloads;
 }
