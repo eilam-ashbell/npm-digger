@@ -10,6 +10,7 @@ import PackageVersionsOverviewModel from "./models/package-versions-overview-mod
 import Downloads from "./downloads";
 import NpmOverviewVersionModel from "./models/npm-overview-version-model";
 import { FullPackageTimeModel } from "./models/package-time-model";
+import Version from "./version";
 
 export default class Package {
     private packageName: string;
