@@ -16,11 +16,11 @@ export default class Package {
     private packageName: string;
     private packagePageUrl: string;
     private packageApiRoute: string;
-    private dependentsBaseRoute: "https://www.npmjs.com/browse/depended/express";
     private headers: Headers;
     private packagePageData: PackagePageModel;
     private packageApiData: PackageApiModel;
     private dependentsList: UserPackageDetailsModel[];
+    private dependentsBaseRoute = "https://www.npmjs.com/browse/depended/express";
 
     constructor(packageName: string) {
         if (!packageName) {
@@ -34,6 +34,7 @@ export default class Package {
         this.headers.append("x-spiferack", "1");
         this.headers.append("content-type", "application/json");
         this.downloads = new Downloads(packageName);
+        this.dependentsList = []
     }
 
     public downloads: Downloads;
@@ -82,7 +83,7 @@ export default class Package {
 
     private async getDependents(): Promise<UserPackageDetailsModel[]> {
         let count = 0;
-        while (count < 0) {
+        while (count >= 0) {
             // get data from npm
             const response = await fetch(
                 this.dependentsBaseRoute + `?offset=${count * 36}`,
@@ -237,7 +238,7 @@ export default class Package {
         listAll: ():
             | UserPackageDetailsModel[]
             | Promise<UserPackageDetailsModel[] | undefined | void> => {
-            return this.dependentsList !== undefined
+            return this.dependentsList.length !== 0
                 ? this.dependentsList
                 : this.getDependents()
                       .then((res) => {

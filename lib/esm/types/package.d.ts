@@ -9,11 +9,11 @@ export default class Package {
     private packageName;
     private packagePageUrl;
     private packageApiRoute;
-    private dependentsBaseRoute;
     private headers;
     private packagePageData;
     private packageApiData;
     private dependentsList;
+    private dependentsBaseRoute;
     constructor(packageName: string);
     downloads: Downloads;
     /**
