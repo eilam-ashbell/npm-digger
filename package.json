@@ -1,7 +1,7 @@
 {
     "name": "npm-digger",
     "version": "1.0.0",
-    "description": "",
+    "description": "API wrapper for NPM data",
     "main": "./lib/cjs/index.js",
     "types": "./lib/cjs/types/index.d.ts",
     "module": "./lib/esm/index.js",
@@ -14,10 +14,15 @@
         "build:esm": "tsc -p ./configs/tsconfig.json && mv lib/esm/index.js lib/esm/index.mjs",
         "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
         "prepublishOnly": "npm run tsc",
-        "rst": "npm run build && npm link"
+        "rst": "npm run build && npm link",
+        "prepare": "npm run build"
     },
-    "keywords": [],
-    "author": "",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/eilam-ashbell/npm-digger.git"
+      },
+    "keywords": ["npm", "api", "wrapper", "packages", "download", "data"],
+    "author": "Eilam Ashbell",
     "license": "ISC",
     "devDependencies": {
         "typescript": "^5.1.6"
