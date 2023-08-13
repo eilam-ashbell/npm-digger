@@ -9,11 +9,11 @@ export default class Package {
     private packageName;
     private packagePageUrl;
     private packageApiRoute;
-    private dependentsBaseRoute;
     private headers;
     private packagePageData;
     private packageApiData;
     private dependentsList;
+    private dependentsBaseRoute;
     constructor(packageName: string);
     downloads: Downloads;
     /**
@@ -160,7 +160,7 @@ export default class Package {
     /**
      * @returns {string} returns time string of package creation
      */
-    createdTime(): string | Promise<string | undefined | void>;
+    createdDateTime(): string | Promise<string | undefined | void>;
     /**
      * @returns {string} returns time string of package last modify time
      */
