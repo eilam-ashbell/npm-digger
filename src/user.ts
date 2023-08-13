@@ -48,7 +48,7 @@ export default class User {
     /**
      * @returns {string} The user type definition by npm
      */
-    public type(): string | Promise<string> {
+    public accountType(): string | Promise<string> {
         return this.fullData !== undefined
             ? this.fullData.scope.type
             : this.rawData()
@@ -71,18 +71,19 @@ export default class User {
                   .catch((err) => console.log(err));
     }
 
-    /**
-     * @returns {boolean} 'true' if the user is deleted
-     */
-    public isDeleted(): boolean | Promise<boolean> {
-        return this.fullData !== undefined
-            ? this.fullData.scope.parent.deleted
-            : this.rawData()
-                  .then((res) => {
-                      return res.scope.parent.deleted;
-                  })
-                  .catch((err) => console.log(err));
-    }
+    // todo: find deleted user to validate
+    // /**
+    //  * @returns {boolean} 'true' if the user is deleted
+    //  */
+    // public isDeleted(): boolean | Promise<boolean> {
+    //     return this.fullData !== undefined
+    //         ? this.fullData.scope.parent.deleted
+    //         : this.rawData()
+    //               .then((res) => {
+    //                   return res.scope.parent.deleted;
+    //               })
+    //               .catch((err) => console.log(err));
+    // }
 
     /**
      * @returns {string} The user description paragraph on npm
@@ -195,24 +196,30 @@ export default class User {
         /**
          * @returns {boolean} 'true' if the user associate github account to his npm profile
          */
-        isGithubAccountConnected: (): boolean | Promise<boolean> => {
+        isGithubAccountConnected: (): boolean | Promise<boolean | void> => {
             return this.fullData !== undefined
                 ? this.fullData.scope.resource.githubLegacy
+                    ? true
+                    : false
                 : this.rawData()
                       .then((res) => {
-                          return res.scope.resource.githubLegacy;
+                          return res.scope.resource.githubLegacy ? true : false;
                       })
                       .catch((err) => console.log(err));
         },
         /**
          * @returns {boolean} 'true' if the user associate twitter account to his npm profile
          */
-        isTwitterAccountConnected: (): boolean | Promise<boolean> => {
+        isTwitterAccountConnected: (): boolean | Promise<boolean | void> => {
             return this.fullData !== undefined
                 ? this.fullData.scope.resource.twitterLegacy
+                    ? true
+                    : false
                 : this.rawData()
                       .then((res) => {
-                          return res.scope.resource.twitterLegacy;
+                          return res.scope.resource.twitterLegacy
+                              ? true
+                              : false;
                       })
                       .catch((err) => console.log(err));
         },

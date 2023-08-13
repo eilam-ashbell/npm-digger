@@ -17,15 +17,11 @@ export default class User {
     /**
      * @returns {string} The user type definition by npm
      */
-    type(): string | Promise<string>;
+    accountType(): string | Promise<string>;
     /**
      * @returns {string} The user name on npm
      */
     name(): string | Promise<string>;
-    /**
-     * @returns {boolean} 'true' if the user is deleted
-     */
-    isDeleted(): boolean | Promise<boolean>;
     /**
      * @returns {string} The user description paragraph on npm
      */
@@ -67,11 +63,11 @@ export default class User {
         /**
          * @returns {boolean} 'true' if the user associate github account to his npm profile
          */
-        isGithubAccountConnected: () => boolean | Promise<boolean>;
+        isGithubAccountConnected: () => boolean | Promise<boolean | void>;
         /**
          * @returns {boolean} 'true' if the user associate twitter account to his npm profile
          */
-        isTwitterAccountConnected: () => boolean | Promise<boolean>;
+        isTwitterAccountConnected: () => boolean | Promise<boolean | void>;
         /**
          * @returns {string} associated github username
          */
