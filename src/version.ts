@@ -24,8 +24,10 @@ export default class Version {
             this.packageVersion = packageVersion;
             this.baseUrl = `https://registry.npmjs.org/${packageName}/${packageVersion}`;
         } else {
-            this.baseUrl = `https://registry.npmjs.org/${packageVersion}/latest`;
+            this.baseUrl = `https://registry.npmjs.org/${packageName}/latest`;
         }
+        console.log(this.baseUrl);
+        
     }
 
     /**
@@ -194,6 +196,20 @@ export default class Version {
                   })
                   .catch((err) => console.log(err));
     }
+
+        /**
+     * @returns {string} url for tarball file
+     */
+        public tarball(): string | Promise<string> {
+            return this.fullData !== undefined
+                ? this.fullData.dist.tarball
+                : this.data()
+                      .then((res) => {
+                          return res.dist.tarball;
+                      })
+                      .catch((err) => console.log(err));
+        }
+
     /**
      * @returns {Record<string, string>} an array of directories included by this version
      */

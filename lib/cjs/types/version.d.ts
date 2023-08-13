@@ -65,6 +65,10 @@ export default class Version {
      */
     dist(): DistModel | Promise<DistModel>;
     /**
+ * @returns {string} url for tarball file
+ */
+    tarball(): string | Promise<string>;
+    /**
      * @returns {Record<string, string>} an array of directories included by this version
      */
     directories(): Record<string, string> | Promise<Record<string, string>>;
