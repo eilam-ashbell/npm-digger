@@ -2,7 +2,9 @@ import DistModel from "./models/dist-model";
 import NpmFullVersionModel from "./models/npm-full-version-model";
 import NpmPersonModel from "./models/npm-person-model";
 import PersonModel from "./models/npm-person-model";
+import ProvenanceModel from "./models/provenance-model";
 import RepoModel from "./models/repo-model";
+import Provenance from "./provenance";
 
 export default class Version {
     private baseUrl: string;
@@ -26,10 +28,10 @@ export default class Version {
         } else {
             this.baseUrl = `https://registry.npmjs.org/${packageName}/latest`;
         }
-        console.log(this.baseUrl);
-        
+        this.provenance = new Provenance(packageName, packageVersion)        
     }
 
+    public provenance: Provenance;
     /**
      * @returns {JSON} JSON object consist all data of specified version or latest version of a package
      */

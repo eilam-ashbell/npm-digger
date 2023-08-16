@@ -10,7 +10,7 @@ export default class Provenance {
      * @param {string} username The npm username of the required user
      * @returns {User} User class with all functionality
      */
-    constructor(packageName: string, packageVersion: string) {
+    constructor(packageName: string, packageVersion?: string) {
         if (!packageName) {
             throw new Error("Package name is required");
         }
