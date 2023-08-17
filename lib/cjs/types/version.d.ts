@@ -2,6 +2,7 @@ import DistModel from "./models/dist-model";
 import NpmPersonModel from "./models/npm-person-model";
 import PersonModel from "./models/npm-person-model";
 import RepoModel from "./models/repo-model";
+import Provenance from "./provenance";
 export default class Version {
     private baseUrl;
     private packageName;
@@ -12,6 +13,7 @@ export default class Version {
      * @returns {Version} Version class with all functionality
      */
     constructor(packageName: string, packageVersion?: string);
+    provenance: Provenance;
     /**
      * @returns {JSON} JSON object consist all data of specified version or latest version of a package
      */
