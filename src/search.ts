@@ -10,7 +10,7 @@ export default class Search {
      * @param {string} from offset to return results from
      * @param {string} quality how much of an effect should quality have on search results (float)
      * @param {string} popularity how much of an effect should popularity have on search results (float)
-     * @param {string} maintenance The npm username of the required user
+     * @param {string} maintenance how much of an effect should maintenance have on search results
      * @returns {User} how much of an effect should maintenance have on search results (float)
      */
     public async searchPackage(
