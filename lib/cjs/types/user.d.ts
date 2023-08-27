@@ -13,7 +13,7 @@ export default class User {
     /**
      * @returns {JSON} JSON object consist all data from npm user page
      */
-    rawData(): Promise<any>;
+    data(): Promise<any>;
     /**
      * @returns {string} The user type definition by npm
      */

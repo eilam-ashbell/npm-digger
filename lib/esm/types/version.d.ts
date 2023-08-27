@@ -10,9 +10,10 @@ export default class Version {
     private fullData;
     /**
      * @param {string} packageName The npm package name (with scope if exist)
+     * @param {string} packageVersion The required  package version
      * @returns {Version} Version class with all functionality
      */
-    constructor(packageName: string, packageVersion?: string);
+    constructor(packageName: string, packageVersion: string);
     provenance: Provenance;
     /**
      * @returns {JSON} JSON object consist all data of specified version or latest version of a package
