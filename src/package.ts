@@ -1,16 +1,13 @@
 import DependentsModel from "./models/dependents-model";
 import DistTagsModel from "./models/dist-tags-model";
-import DownloadsModel from "./models/downloads-model";
 import NpmPackageVersionDataModel from "./models/npm-package-version-data-model";
 import NpmPersonModel from "./models/npm-person-model";
 import PackageApiModel from "./models/package-api-model";
 import PackagePageModel from "./models/package-page-model";
 import UserPackageDetailsModel from "./models/user-package-details-model";
-import PackageVersionsOverviewModel from "./models/package-versions-overview-model";
 import Downloads from "./downloads";
 import NpmOverviewVersionModel from "./models/npm-overview-version-model";
 import { FullPackageTimeModel } from "./models/package-time-model";
-import Version from "./version";
 
 export default class Package {
     private packageName: string;
@@ -20,7 +17,8 @@ export default class Package {
     private packagePageData: PackagePageModel;
     private packageApiData: PackageApiModel;
     private dependentsList: UserPackageDetailsModel[];
-    private dependentsBaseRoute = "https://www.npmjs.com/browse/depended/express";
+    private dependentsBaseRoute =
+        "https://www.npmjs.com/browse/depended/express";
 
     constructor(packageName: string) {
         if (!packageName) {
@@ -34,7 +32,7 @@ export default class Package {
         this.headers.append("x-spiferack", "1");
         this.headers.append("content-type", "application/json");
         this.downloads = new Downloads(packageName);
-        this.dependentsList = []
+        this.dependentsList = [];
     }
 
     public downloads: Downloads;
@@ -81,22 +79,26 @@ export default class Package {
         }
     }
 
-    private async getDependents(): Promise<UserPackageDetailsModel[]> {
-        let count = 0;
-        while (count >= 0) {
-            // get data from npm
-            const response = await fetch(
-                this.dependentsBaseRoute + `?offset=${count * 36}`,
-                {
-                    method: "GET",
-                    headers: this.headers,
-                }
-            );
-            const data = (await response.json()) as DependentsModel;
-            this.dependentsList.push(...data.packages);
-            data.hasNext ? count++ : (count = -1);
+    private async getDependents(): Promise<UserPackageDetailsModel[] | undefined> {
+        try {
+            let count = 0;
+            while (count >= 0) {
+                // get data from npm
+                const response = await fetch(
+                    this.dependentsBaseRoute + `?offset=${count * 36}`,
+                    {
+                        method: "GET",
+                        headers: this.headers,
+                    }
+                );
+                const data = (await response.json()) as DependentsModel;
+                this.dependentsList.push(...data.packages);
+                data.hasNext ? count++ : (count = -1);
+            }
+            return this.dependentsList;
+        } catch (err) {
+            console.log(err);
         }
-        return this.dependentsList;
     }
 
     /**
