@@ -16,6 +16,7 @@ API wrapper and data extractor on NPM packages without any requirements.
     - [User](#user)
     - [Search](#search)
     - [Provenance](#provenance)
+    - [Vulnerabilities](#vulnerabilities)
 <!-- * [Contributing](#contributing) -->
 <!-- * [License](#license) -->
 <!-- * [Author](#author) -->
@@ -376,3 +377,34 @@ Functionality
 | sourceCommitResponseCode()|  | number |
 | sourceCommitUnreachable()|  | boolean |
 | sourceCommitNotFound()|  | boolean |
+
+### Vulnerabilities
+
+By init the `Vulnerabilities` class, you get access osv data about the package and can search for vulnerabilities. this class uses the osv [API](https://google.github.io/osv.dev/post-v1-query/) to fetch the data.
+
+``` js
+import { Vulnerabilities } from 'npm-digger'
+
+const vulnerabilities = new Vulnerabilities()
+
+const res = await vulnerabilities.number('express', '3.0.0')
+
+console.log(res)
+// 1
+
+```
+
+Params
+| Name | Description | Type | Required |
+| ------ | ------ | ------ | ------ |
+| packageName | package name | string | yes |
+| packageVersion | requested version number | string | yes |
+
+Functionality
+
+| Function              | Description                                           | Type          |
+| --------------------- | ----------------------------------------------------- | ------------- |
+| data() | JSON object consist all provenance data of the specified package version | JSON |
+| number() | the number of vulnerabilities for the package | number |
+| ids() | all vulnerabilities ids for the specified package | string[] |
+| keyInfo() | an object with key info about the vulnerabilities: id, summary, publish date, modified date, affected versions and severity | object |
