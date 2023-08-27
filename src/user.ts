@@ -27,7 +27,7 @@ export default class User {
     /**
      * @returns {JSON} JSON object consist all data from npm user page
      */
-    public async rawData() {
+    public async data() {
         try {
             // get data from npm
             const response = await fetch(this.baseUrl, {
@@ -51,7 +51,7 @@ export default class User {
     public accountType(): string | Promise<string> {
         return this.fullData !== undefined
             ? this.fullData.scope.type
-            : this.rawData()
+            : this.data()
                   .then((res) => {
                       return res.scope.type;
                   })
@@ -64,7 +64,7 @@ export default class User {
     public name(): string | Promise<string> {
         return this.fullData !== undefined
             ? this.fullData.scope.name
-            : this.rawData()
+            : this.data()
                   .then((res) => {
                       return res.scope.name;
                   })
@@ -78,7 +78,7 @@ export default class User {
     // public isDeleted(): boolean | Promise<boolean> {
     //     return this.fullData !== undefined
     //         ? this.fullData.scope.parent.deleted
-    //         : this.rawData()
+    //         : this.data()
     //               .then((res) => {
     //                   return res.scope.parent.deleted;
     //               })
@@ -91,7 +91,7 @@ export default class User {
     public description(): string | Promise<string> {
         return this.fullData !== undefined
             ? this.fullData.scope.parent.description
-            : this.rawData()
+            : this.data()
                   .then((res) => {
                       return res.scope.parent.description;
                   })
@@ -104,7 +104,7 @@ export default class User {
     public avatars(): AvatarsModel | Promise<AvatarsModel> {
         return this.fullData !== undefined
             ? this.fullData.scope.parent.avatars
-            : this.rawData()
+            : this.data()
                   .then((res) => {
                       return res.scope.parent.avatars;
                   })
@@ -121,7 +121,7 @@ export default class User {
         small: (): string | Promise<string> => {
             return this.fullData !== undefined
                 ? this.fullData.scope.parent.avatars.small
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.scope.parent.avatars.small;
                       })
@@ -133,7 +133,7 @@ export default class User {
         medium: (): string | Promise<string> => {
             return this.fullData !== undefined
                 ? this.fullData.scope.parent.avatars.medium
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.scope.parent.avatars.medium;
                       })
@@ -145,7 +145,7 @@ export default class User {
         large: (): string | Promise<string> => {
             return this.fullData !== undefined
                 ? this.fullData.scope.parent.avatars.large
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.scope.parent.avatars.large;
                       })
@@ -159,7 +159,7 @@ export default class User {
     public createdDate(): string | Promise<string> {
         return this.fullData !== undefined
             ? this.fullData.scope.created
-            : this.rawData()
+            : this.data()
                   .then((res) => {
                       return res.scope.created;
                   })
@@ -172,7 +172,7 @@ export default class User {
     public updatedDate(): string | Promise<string> {
         return this.fullData !== undefined
             ? this.fullData.scope.updated
-            : this.rawData()
+            : this.data()
                   .then((res) => {
                       return res.scope.updated;
                   })
@@ -185,7 +185,7 @@ export default class User {
     public id(): number | Promise<number> {
         return this.fullData !== undefined
             ? this.fullData.scope.id
-            : this.rawData()
+            : this.data()
                   .then((res) => {
                       return res.scope.id;
                   })
@@ -201,7 +201,7 @@ export default class User {
                 ? this.fullData.scope.resource.githubLegacy
                     ? true
                     : false
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.scope.resource.githubLegacy ? true : false;
                       })
@@ -215,7 +215,7 @@ export default class User {
                 ? this.fullData.scope.resource.twitterLegacy
                     ? true
                     : false
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.scope.resource.twitterLegacy
                               ? true
@@ -229,7 +229,7 @@ export default class User {
         githubAccount: (): string | Promise<string> => {
             return this.fullData !== undefined
                 ? this.fullData.scope.resource.github
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.scope.resource.github;
                       })
@@ -244,7 +244,7 @@ export default class User {
         //     const username =
         //         this.fullData !== undefined
         //             ? this.fullData.scope.resource.twitter
-        //             : this.rawData()
+        //             : this.data()
         //                   .then((res) => {
         //                       return res.scope.resource.twitter;
         //                   })
@@ -263,7 +263,7 @@ export default class User {
         twitterAccount: (): string | Promise<string> => {
             return this.fullData !== undefined
                 ? this.fullData.scope.resource.twitter
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.scope.resource.twitter;
                       })
@@ -275,7 +275,7 @@ export default class User {
         fullName: (): string | Promise<string> | null => {
             return this.fullData !== undefined
                 ? this.fullData.scope.resource.fullName
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.scope.resource.fullName;
                       })
@@ -287,7 +287,7 @@ export default class User {
         email: (): string | Promise<string> | null => {
             return this.fullData !== undefined
                 ? this.fullData.scope.resource.email
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.scope.resource.email;
                       })
@@ -304,7 +304,7 @@ export default class User {
 
         // if first fetch did not happened yet -> execute it
         if (this.fullData == undefined) {
-            const data = await this.rawData();
+            const data = await this.data();
         }
 
         if (this.fullData != undefined) {
@@ -343,7 +343,7 @@ export default class User {
         totalNumber: (): number | Promise<number> => {
             return this.fullData !== undefined
                 ? this.fullData.packages.total
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.packages.total;
                       })
@@ -364,7 +364,7 @@ export default class User {
         totalNumber: (): number | Promise<number> => {
             return this.fullData !== undefined
                 ? this.fullData.orgs.total
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.orgs.total;
                       })
@@ -376,7 +376,7 @@ export default class User {
         listAll: (): any[] | Promise<any[]> => {
             return this.fullData !== undefined
                 ? this.fullData.orgs.objects
-                : this.rawData()
+                : this.data()
                       .then((res) => {
                           return res.orgs.object;
                       })

@@ -5,7 +5,7 @@ export default class Registry {
     private baseUrl: string;
 
     constructor(registryUrl?: string) {
-        this.baseUrl = registryUrl || "https://registry.npmjs.org/"
+        this.baseUrl = registryUrl || "https://registry.npmjs.org/";
     }
 
     public async data() {
