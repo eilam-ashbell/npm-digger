@@ -1,6 +1,6 @@
 {
     "name": "npm-digger",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "API wrapper for NPM data",
     "main": "./lib/cjs/index.js",
     "types": "./lib/cjs/types/index.d.ts",
